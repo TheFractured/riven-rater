@@ -13,11 +13,15 @@ class winrate_calcuations(object):
 
         winrate_percent_difference = round(winrate_difference / winrate_average * 100, 3)
 
-        player_wins = math.floor(player_winrate/100)*1000
+        player_wins = math.floor(player_winrate*10)
+        print player_wins, 'player wins' #For testing
         player_losses = math.floor(1000 - player_wins)
+        print player_losses, 'player losses' #For testing
 
-        public_wins = math.floor(public_winrate/100)*1000
+        public_wins = math.floor(public_winrate*10)
+        print public_wins, 'public wins' #For testing
         public_losses = math.floor(1000 - public_wins)
+        print public_losses, 'public losses' #For testing
 
         oddsratio, pvalue = stats.fisher_exact([[player_wins, player_losses], [public_wins, public_losses]])
         print 'pvalue =', pvalue

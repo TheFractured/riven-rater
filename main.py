@@ -7,7 +7,8 @@ import consts as CONSTS
 
 
 def main():
-    #my_api_key = str(raw_input('\nPaste API Key: '))
+    #my_riot_api_key = str(raw_input('\nPaste Riot API Key: '))
+    #my_championgg_api_key = str(raw_input('\nPaste champion.gg API Key: '))
     my_riot_api_key = '8792f2e9-2e9e-4f23-81bd-a219f81ea98f'
     my_championgg_api_key = '3f9e409bd58bc1868f8bfc4a3a75d40c'
     w = RiotWatcher(my_riot_api_key)

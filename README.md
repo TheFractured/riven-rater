@@ -46,3 +46,10 @@ winrate_difference_calculator.py
   It accepts two winrates (player and public) in percent notation (aka 56 not 0.56) and uses them to calculate two values: A percent
   difference between the two and a pvalue obtainied from a Fisher's Exact Test (scipy used here). The idea is to give a clue as to a
   player's skill on a champion compared to the population. Problem is, without modern ranked data, I'm forced to approximate numbers of
+  games won/lost by using the winrate and multiplying it by a nice, fat multiple of 10. There's for sure a less horrific way to do it, 
+  but this one took 5 minutes to implement and it let me keep testing and I haven't looked back yet.
+  
+main.py
+  The meaty bit. I assign RiotWatcher and my implementation of the championggAPI to variables which I use to call on them. The user 
+  inputs summoner data which is used to gather data with the API calls, and it is presented to them. Most of the JSON processing is done 
+  here, as the JSON's are saved to variables once gathered and used periodically for relevent data.

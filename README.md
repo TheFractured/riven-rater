@@ -36,6 +36,9 @@ Mastery_page_parser.py
   Small class used to parse RiotAPI's JSON output of mastery page ID's into a list of mastery names and descriptions from consts.py
   The JSON is taken from the current mastery page of an input summoner ID.
 
+rune_page_parser.py
+  Small class used to parse RiotAPI's JSON output of runeIDs into a count of each type of rune and name/description.
+
 champgg_scraper.py
   Simple class that implements calling champion.gg's API. The necessary URL formats are stored in consts.py, and errors are handled by
   LoLException.

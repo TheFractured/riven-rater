@@ -3,6 +3,7 @@ from request_champion_mastery import ChampionMastery
 from Mastery_page_parser import MasteryPageParsing
 from champgg_scraper import championggAPI
 from winrate_difference_calculator import winrate_calcuations
+from rune_page_parser import RunePageParsing
 import consts as CONSTS
 
 
@@ -23,26 +24,51 @@ def main():
 
     my_mastery_pages = w.get_mastery_pages([summoner['id'], ])[str(summoner['id'])]
     show_masteries = str(raw_input('Show current masteries? '))
+    len_mastery_data = len(my_mastery_pages['pages'])
 
     if show_masteries == 'Yes':
-        for x in range(0, 19):
+        for x in range(0, len_mastery_data):
             if my_mastery_pages['pages'][x]['current']:
-                current_page = my_mastery_pages['pages'][x]
+                current_mastery_page = my_mastery_pages['pages'][x]
                 print ('Current masteries: ')
-        print '\"{name}\"'.format(name=current_page['name'])
-        mastery = MasteryPageParsing(current_page)
+        print '\"{name}\"'.format(name=current_mastery_page['name'])
+        mastery = MasteryPageParsing(current_mastery_page)
         m = mastery.tree_divider()
         print m
 
     elif show_masteries == 'yes':
-        for x in range(0, 19):
+        for x in range(0, len_mastery_data):
             if my_mastery_pages['pages'][x]['current']:
-                current_page = my_mastery_pages['pages'][x]
-        print ('Current masteries: ')
-        print '\"{name}\"'.format(name=current_page['name'])
-        mastery = MasteryPageParsing(current_page)
+                current_mastery_page = my_mastery_pages['pages'][x]
+        print ('Current mastery page: ')
+        print '\"{name}\"'.format(name=current_mastery_page['name'])
+        mastery = MasteryPageParsing(current_mastery_page)
         m = mastery.tree_divider()
         print m
+
+    my_rune_pages = w.get_rune_pages([summoner['id'], ])[str(summoner['id'])]
+    show_runes = str(raw_input('Show current runes? '))
+    len_rune_data = len(my_rune_pages['pages'])
+
+    if show_runes == 'Yes':
+        for x in range(0, len_rune_data):
+            if my_rune_pages['pages'][x]['current']:
+                current_rune_page = my_rune_pages['pages'][x]
+                print ('Current rune page: ')
+        print '\"{name}\"'.format(name=current_rune_page['name'])
+        runes = RunePageParsing(current_rune_page)
+        r = runes.rune_descriptions()
+        print r
+
+    elif show_runes == 'yes':
+        for x in range(0, len_rune_data):
+            if my_rune_pages['pages'][x]['current']:
+                current_rune_page = my_rune_pages['pages'][x]
+        print ('Current runes: ')
+        print '\"{name}\"'.format(name=current_rune_page['name'])
+        runes = RunePageParsing(current_rune_page)
+        r = runes.rune_descriptions()
+        print r
 
     champ_to_check = str(raw_input('\nWhat champion are they on? '))
     role_of_champ = str(raw_input('What role are they in? (Valid inputs: Top, Jungle, Middle, ADC, Support) '))
@@ -67,7 +93,7 @@ def main():
             champ_games_lost = float(ranked_champion_stats['champions'][x]['stats']['totalSessionsLost'])
             #print 'games lost', champ_games_lost
             champ_games_played = float(ranked_champion_stats['champions'][x]['stats']['totalSessionsPlayed'])
-            winrate = round((champ_games_won / champ_games_played)*100, 3)
+            winrate = round((champ_games_won / champ_games_played) * 100, 3)
 
             if champ_games_played > 5:
                 if 60 <= winrate:
@@ -77,7 +103,7 @@ def main():
                 elif 40 <= winrate < 50:
                     winrate_reaction = 'bad'
                 else:
-                    winrate_reaction = 'really, really shitty'
+                    winrate_reaction = 'ebolAIDS-causing, cancer-giving, hope-sundering'
             else:
                 winrate_reaction = 'unreliable'
 
@@ -93,11 +119,10 @@ def main():
                 if champ_stats[y]['role'] == role_of_champ:
                     champ_winrate = float(champ_stats[y]['general']['winPercent'])
 
-            print 'Average winrate for {champ} as {role} is {winrate}.\n'.format(champ=champ_to_check, role=role_of_champ, winrate=champ_winrate)
+            print 'Average winrate for {champ} as {role} is {winrate}.'.format(champ=champ_to_check, role=role_of_champ, winrate=champ_winrate)
 
-            calc = winrate_calcuations('fee1sbadman')
+            calc = winrate_calcuations(summoner['name'])
             calc.winrate_difference(winrate, champ_winrate)
-
 
     if champ_found is False:
         print 'No ranked champion data found for {champ}\n'.format(champ=champ_to_check)
